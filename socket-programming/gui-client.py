@@ -29,6 +29,7 @@ def enterChat():
         global chat
         try:
             message = msgInput.get()
+            msgInput.delete(0, tk.END)
             chat = chat + "\n" + "You: " + message
             showText()
             client.send(message.encode())
@@ -55,6 +56,7 @@ def enterChat():
     chatContainer.anchor(anchor="nw")
     chatContainer.grid(row=1, rowspan=9, column=0)
     msgInput.grid(row=10, column=0)
+    msgInput.focus_set()
     sendBtn.grid(row=10, column=1)
     exitBtn.grid(row=1, column=1)
     root.bind("<Return>", lambda event=None: sendBtn.invoke())
@@ -74,7 +76,7 @@ def login():
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(("localhost", 1313))
+client.connect((HOST, PORT))
 
 isChatting = True
 chat = ""
@@ -93,6 +95,7 @@ loginBtn = tk.Button(root, text="Login", command=login, default=tk.ACTIVE)
 headerLbl.grid(row=0, columnspan=2)
 usernameLbl.grid(row=1)
 usernameInput.grid(row=2)
+usernameInput.focus_set()
 loginBtn.grid(row=3)
 
 root.bind("<Return>", lambda event=None: loginBtn.invoke())
